@@ -1,17 +1,18 @@
-﻿using Npgsql;
-using Product_API.Models;
+﻿
+using Npgsql;
+using Product.Domain.Entities;
 
-namespace Product_API.Repositories
+namespace Product_API.Infrastructure.Repositories
 {
     public class ProductPostgressRepository : IProductRepository
     {
-        public string connectionString = "Host=localhost; Port = 5432; Database = Users; User Id = postgres; Password = Maqsudkhan;";
+        public string connectionString = "Host=localhost; Port = 5432; Database = Testdb; User Id = postgres; Password = 1234;";
         public NpgsqlConnection connection;
         public ProductPostgressRepository()
         {
             connection = new NpgsqlConnection(connectionString);
         }
-        public ProductDTO Add(ProductDTO product)
+        public ProductModelDTO Add(ProductModelDTO product)
         {
             connection.Open();
             string query = $"insert into products(Name,Description,PhotoPath) values('{product.Name}','{product.Description}','{product.PhotoPath}');";
@@ -20,9 +21,9 @@ namespace Product_API.Repositories
             connection.Close();
             return product;
         }
-        public List<Product> GetAll()
+        public List<ProductModel> GetAll()
         {
-            List<Product> products = new List<Product>();
+            List<ProductModel> products = new List<ProductModel>();
             connection.Open();
 
             string query = $"select * from products;";
@@ -30,7 +31,7 @@ namespace Product_API.Repositories
             var result = cmd.ExecuteReader();
             while (result.Read())
             {
-                products.Add(new Product { Id = Convert.ToInt32(result["Id"]), Name = Convert.ToString(result["Name"]), Description = Convert.ToString(result["Description"]), PhotoPath = Convert.ToString(result["PhotoPath"]) });
+                products.Add(new ProductModel { Id = Convert.ToInt32(result["Id"]), Name = Convert.ToString(result["Name"]), Description = Convert.ToString(result["Description"]), PhotoPath = Convert.ToString(result["PhotoPath"]) });
             }
             connection.Close();
             return products;

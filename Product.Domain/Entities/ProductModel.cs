@@ -1,6 +1,12 @@
-﻿namespace Product_API.Models
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Product.Domain.Entities
 {
-    public class Product
+    public class ProductModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
