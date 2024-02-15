@@ -3,18 +3,18 @@ using Product_API.Models;
 
 namespace Product_API.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductPostgressRepository : IProductRepository
     {
         public string connectionString = "Host=localhost; Port = 5432; Database = Users; User Id = postgres; Password = Maqsudkhan;";
         public NpgsqlConnection connection;
-        public ProductRepository()
+        public ProductPostgressRepository()
         {
             connection = new NpgsqlConnection(connectionString);
         }
-        public Product Add(Product product)
+        public ProductDTO Add(ProductDTO product)
         {
             connection.Open();
-            string query = $"insert into products(Id,Name,Description,PhotoPath) values({product.Id},'{product.Name}','{product.Description}','{product.PhotoPath}');";
+            string query = $"insert into products(Name,Description,PhotoPath) values('{product.Name}','{product.Description}','{product.PhotoPath}');";
             using NpgsqlCommand cmd = new NpgsqlCommand(query, connection);
             cmd.ExecuteNonQuery();
             connection.Close();

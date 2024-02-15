@@ -4,7 +4,7 @@ namespace Product_API.Repositories
 {
     public interface IProductRepository
     {
-        Product Add(Product product);
+        ProductDTO Add(ProductDTO product);
         List<Product> GetAll();
     }
 }
